@@ -1,0 +1,66 @@
+{
+  "name": "adb",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "bootstrap": "^3.3.7",
+    "lodash.chunk": "^4.2.0",
+    "react": "^16.2.0",
+    "react-bootstrap": "^0.32.0",
+    "react-dom": "^16.2.0",
+    "react-file-input": "^0.2.5",
+    "react-scripts": "1.1.0",
+    "xlsx": "^0.11.17"
+  },
+  "devDependencies": {
+    "babel-eslint": "^8.2.1",
+    "eslint": "4.10.0",
+    "eslint-config-airbnb": "15.1.0",
+    "eslint-config-react-app": "^2.0.1",
+    "eslint-plugin-import": "2.8.0",
+    "eslint-plugin-jsx-a11y": "5.1.1",
+    "eslint-plugin-react": "7.4.0",
+    "prettier-eslint": "^8.6.0"
+  },
+  "scripts": {
+    "start": "BROWSER=none react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  },
+  "babel": {
+    "presets": [
+      "react-app"
+    ]
+  },
+  "eslintConfig": {
+    "root": true,
+    "extends": "airbnb",
+    "plugins": [
+      "react"
+    ],
+    "parser": "babel-eslint",
+    "parserOptions": {
+      "ecmaVersion": 6,
+      "sourceType": "module",
+      "ecmaFeatures": {
+        "jsx": true
+      }
+    },
+    "env": {
+      "es6": true,
+      "browser": true
+    },
+    "rules": {
+      "react/jsx-filename-extension": [
+        1,
+        {
+          "extensions": [
+            ".js",
+            ".jsx"
+          ]
+        }
+      ]
+    }
+  }
+}
