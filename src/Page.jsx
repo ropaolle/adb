@@ -1,61 +1,29 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import {
-  Form,
-  FormGroup,
-  Label,
-  Input,
   Card,
   CardImg,
   CardBody,
   CardTitle,
-  CardSubtitle,
   CardFooter,
 } from 'reactstrap';
 import chunk from 'lodash.chunk';
-import parsXlsx, { getDateString } from './xlsx';
-import './App.css';
+import { getDateString } from './xlsx';
 
 
-class App extends Component {
+class Page extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      value: '',
-      filename: '',
-      families: [],
-    };
-  }
-
-  getValidationState = () => {
-    const length = this.state.value.length;
-    if (length > 10) return 'success';
-    else if (length > 5) return 'warning';
-    else if (length > 0) return 'error';
-    return null;
-  };
-
-  handleChange = (e) => {
-    // console.log(e.target.value);
-    // console.log(e.target.files);
-    this.setState({ value: e.target.value });
-  };
-
-  handleFileOpen = (e) => {
-    const file = e.target.files[0];
-    const filename = file.name;
-    parsXlsx(file).then((families) => {
-      this.setState({ families, filename });
-    });
-    e.target.value = '';
+    this.state = { dummy: '' };
   }
 
   render() {
-    const { families } = this.state;
+    const { page, completed } = this.props;
 
-    const pageHeader = (row, completed) => (
+    const pageHeader = (row, compl) => (
       <div>
         <h2 className="page-header">
-          Artdatabanken<span>{completed ? 'Komplett' : ''}</span>
+          Artdatabanken<span>{compl ? 'Komplett' : ''}</span>
         </h2>
         <div className="page-sub-header">
           <span className="klass">Klass:<i>{row.kingdom}</i></span>
@@ -70,55 +38,65 @@ class App extends Component {
       const hona = item.sex.toLocaleLowerCase().indexOf('hona');
       const icons = [];
       if (hane > hona) {
-        if (hona > -1) icons.push(<i className="fa fa-venus" />);
-        icons.push(<i className="fa fa-mars" />);
+        if (hona > -1) icons.push(<i className="fa fa-venus" key="1" />);
+        icons.push(<i className="fa fa-mars" key="2" />);
       } else if (hona > hane) {
-        if (hane > -1) icons.push(<i className="fa fa-mars" />);
-        icons.push(<i className="fa fa-venus" />);
+        if (hane > -1) icons.push(<i className="fa fa-mars" key="3" />);
+        icons.push(<i className="fa fa-venus" key="4" />);
       }
       return (<span>{icons}</span>);
     };
 
-    const cardTitle = item => (
-      <div>
-        <span>{item.speices}{' '}</span>
-        {sexIcons(item)}
-        {item.speices_latin && <span>({item.speices_latin})</span>}
-      </div>);
-
-    const footer = item => (<span>
-      <span>{item.place}</span>
-      {item.county && <span> ({item.county})</span>}
-      <span className="float-right">{getDateString(item.date)}</span>
-    </span>);
-
     const card = item => (
-      <Card>
+      <Card key={item.id}>
         <CardImg top width="100%" src="./images/bird-500x500.jpg" alt={item.speices} />
         <CardBody>
-          <CardTitle>{cardTitle(item)}</CardTitle>
+          <CardTitle>
+            <span>{item.speices}{' '}</span>
+            {sexIcons(item)}
+            {item.speices_latin && <span>({item.speices_latin})</span>}
+          </CardTitle>
         </CardBody>
-        <CardFooter>{footer(item)}</CardFooter>
+        <CardFooter>
+          <span>{item.place}</span>
+          {item.county && <span> ({item.county})</span>}
+          <span className="float-right">{getDateString(item.date)}</span>
+        </CardFooter>
       </Card>);
 
-    const cards = data => chunk(data, 3).reduce((acc, row) => {
-      // console.log('row', row);
-      acc.push(<div className="card-deck mb-4">{row.map(item => card(item))}</div>);
-      return acc;
-    }, []);
+    const cards = data => chunk(data, 3).map((row) => {
+      console.log('row', row);
+      return (<div className="card-deck mb-4" key={row[0].id}>
+        {row.map(item => card(item))}
+      </div>);
+    });
 
-    const html = families.map(family => (
-      <div className="page">
-        {pageHeader(family.data[0], family.completed)}
-        <div>{cards(family.data)}</div>
-      </div>));
+    // console.log('p2', page);
+    // console.log('p3', completed);
 
     return (
-      <div>
-        <div id="content" className="page-wrapper">{html}</div>
+      <div className="page">
+        {pageHeader(page[0], completed)}
+        <div>{cards(page)}</div>
       </div>
     );
   }
 }
 
-export default App;
+Page.propTypes = {
+  completed: PropTypes.bool.isRequired,
+  page: PropTypes.arrayOf(PropTypes.shape({
+    kingdom: PropTypes.string.isRequired,
+    order: PropTypes.string.isRequired,
+    family: PropTypes.string.isRequired,
+    county: PropTypes.string,
+    date: PropTypes.number,
+    image: PropTypes.string,
+    place: PropTypes.string,
+    sex: PropTypes.string,
+    speices: PropTypes.string,
+    speices_latin: PropTypes.string,
+  })).isRequired,
+};
+
+export default Page;

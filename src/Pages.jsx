@@ -1,125 +1,33 @@
-import React, { Component } from 'react';
-import {
-  Form,
-  FormGroup,
-  Label,
-  Input,
-  Card,
-  CardImg,
-  CardBody,
-  CardTitle,
-  CardSubtitle,
-  CardFooter,
-} from 'reactstrap';
+import React from 'react';
+import PropTypes from 'prop-types';
 import chunk from 'lodash.chunk';
-import parsXlsx, { getDateString } from './xlsx';
-import './App.css';
+import Page from './Page';
 
+const Pages = function dude(props) {
+  const { families } = props;
+  console.log('FULL', families);
 
-class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      value: '',
-      filename: '',
-      families: [],
-    };
-  }
+  const pages = families.map(family =>
+    chunk(family.data, 9).map(page => (
+      <Page page={page} completed={family.completed} key={page[0].id} />
+    )),
+  );
 
-  getValidationState = () => {
-    const length = this.state.value.length;
-    if (length > 10) return 'success';
-    else if (length > 5) return 'warning';
-    else if (length > 0) return 'error';
-    return null;
-  };
+  return <div className="pages">{pages}</div>;
+};
 
-  handleChange = (e) => {
-    // console.log(e.target.value);
-    // console.log(e.target.files);
-    this.setState({ value: e.target.value });
-  };
+Pages.propTypes = {
+  families: PropTypes.arrayOf(
+    PropTypes.shape({
+      family: PropTypes.string.isRequired,
+      data: PropTypes.array.isRequired,
+      completed: PropTypes.bool.isRequired,
+    }),
+  ),
+};
 
-  handleFileOpen = (e) => {
-    const file = e.target.files[0];
-    const filename = file.name;
-    parsXlsx(file).then((families) => {
-      this.setState({ families, filename });
-    });
-    e.target.value = '';
-  }
+Pages.defaultProps = {
+  families: [],
+};
 
-  render() {
-    const { families } = this.state;
-
-    const pageHeader = (row, completed) => (
-      <div>
-        <h2 className="page-header">
-          Artdatabanken<span>{completed ? 'Komplett' : ''}</span>
-        </h2>
-        <div className="page-sub-header">
-          <span className="klass">Klass:<i>{row.kingdom}</i></span>
-          <span className="ordning">Ordning:<i>{row.order}</i></span>
-          <span className="familj">Familj:<i>{row.family}</i></span>
-        </div>
-      </div>);
-
-    const sexIcons = (item) => {
-      if (!item.sex) return (<span />);
-      const hane = item.sex.toLocaleLowerCase().indexOf('hane');
-      const hona = item.sex.toLocaleLowerCase().indexOf('hona');
-      const icons = [];
-      if (hane > hona) {
-        if (hona > -1) icons.push(<i className="fa fa-venus" />);
-        icons.push(<i className="fa fa-mars" />);
-      } else if (hona > hane) {
-        if (hane > -1) icons.push(<i className="fa fa-mars" />);
-        icons.push(<i className="fa fa-venus" />);
-      }
-      return (<span>{icons}</span>);
-    };
-
-    const cardTitle = item => (
-      <div>
-        <span>{item.speices}{' '}</span>
-        {sexIcons(item)}
-        {item.speices_latin && <span>({item.speices_latin})</span>}
-      </div>);
-
-    const footer = item => (<span>
-      <span>{item.place}</span>
-      {item.county && <span> ({item.county})</span>}
-      <span className="float-right">{getDateString(item.date)}</span>
-    </span>);
-
-    const card = item => (
-      <Card>
-        <CardImg top width="100%" src="./images/bird-500x500.jpg" alt={item.speices} />
-        <CardBody>
-          <CardTitle>{cardTitle(item)}</CardTitle>
-        </CardBody>
-        <CardFooter>{footer(item)}</CardFooter>
-      </Card>);
-
-    const cards = data => chunk(data, 3).reduce((acc, row) => {
-      // console.log('row', row);
-      acc.push(<div className="card-deck mb-4">{row.map(item => card(item))}</div>);
-      return acc;
-    }, []);
-
-    const html = families.map(family => (
-      <div className="page">
-        {pageHeader(family.data[0], family.completed)}
-        <div>{cards(family.data)}</div>
-      </div>));
-
-    return (
-      <div className="page">
-        {pageHeader(family.data[0], family.completed)}
-        <div>{cards(family.data)}</div>
-      </div>
-    );
-  }
-}
-
-export default App;
+export default Pages;

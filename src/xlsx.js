@@ -13,14 +13,14 @@ export function getDateString(rawDate) {
 function groupByFamily(worksheet) {
   let index = 0;
   return Object.values(worksheet).reduce((acc, row, i) => {
-    const newFamily = { family: row.family, data: [row], completed: !!row.date };
+    const newFamily = { family: row.family, data: [{ ...row, id: i }], completed: !!row.date };
     if (i === 0) {
       acc[index] = newFamily;
     } else if (acc[index].family !== row.family) {
       index += 1;
       acc[index] = newFamily;
     } else {
-      acc[index].data.push(row);
+      acc[index].data.push({ ...row, id: i });
       if (!row.date) acc[index].completed = false;
     }
     return acc;
