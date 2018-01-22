@@ -1,3 +1,81 @@
 #fileInput {
   display: none;
 }
+
+.form-inline {
+  margin-bottom: 25px;
+}
+
+.page-wrapper {
+  width: 100%;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.card-body {
+  padding: 5px 10px;
+}
+
+.card-title {
+  margin-bottom: 0;
+  font-size: 18px;
+}
+
+.card-footer {
+  background-color: #e7e7e7;
+  padding: 5px 10px;
+  font-size: 13px;
+}
+
+.page-header span {
+  font-size: 12px;
+  font-weight: bold;
+  background-color: #55ee55;
+  padding: 2px 6px 2px 6px;
+  border-radius: 6px;
+  position: absolute;
+  margin-top: 5px;
+}
+
+.page-header span:empty {
+  display: none;
+}
+
+@media print {
+  .header {
+    display: none;
+  }
+
+ /*  .page {
+    border: none;
+    padding: 0;
+    max-width: auto;
+    min-height: auto;
+    margin-top: 0;
+  } */
+
+  .page-header {
+    page-break-before: always;
+  }
+
+  .page-header span {
+    background-color: chartreuse !important;
+    -webkit-print-color-adjust: exact;
+  }
+
+  h3 .klass i {
+    background-color: #333 !important;
+    -webkit-print-color-adjust: exact;
+  }
+
+  .card {
+    border: 1px solid rgba(0, 0, 0, 0.5);
+  }
+
+  .card-footer {
+    background-color: #e7e7e7 !important;
+    -webkit-print-color-adjust: exact;
+  }
+
+
+}

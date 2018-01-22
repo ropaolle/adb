@@ -114,39 +114,9 @@ class App extends Component {
       </div>));
 
     return (
-      <div>
-        <div className="header">
-          <h1>Artdatabanken</h1>
-          <div className="help-link">
-            <a href="lib/Howto.htm">Beskär bilder med Fotor</a>
-          </div>
-
-          <Form inline>
-            <FormGroup>
-              <label className="btn btn-primary btn-file" htmlFor="fileInput">
-              Öppna Excelfil
-                <input type="file" onChange={this.handleFileOpen} id="fileInput" />
-              </label>
-            </FormGroup>
-            <FormGroup controlId="formControlsSelect">
-              <Label>Familj</Label>
-              <Input type="select" name="select" id="exampleSelect">
-                <option value="select">select</option>
-                <option value="other">...</option>
-              </Input>
-            </FormGroup>
-
-            <FormGroup check>
-              <Label check>
-                <Input type="checkbox" />{' '}
-              Komplettmarkering
-              </Label>
-            </FormGroup>
-          </Form>
-        </div>
-
-
-        <div id="content" className="page-wrapper">{html}</div>
+      <div className="page">
+        {pageHeader(family.data[0], family.completed)}
+        <div>{cards(family.data)}</div>
       </div>
     );
   }

@@ -3,13 +3,13 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "bootstrap": "^3.3.7",
+    "bootstrap": "^4.0.0-beta.3",
     "lodash.chunk": "^4.2.0",
     "react": "^16.2.0",
-    "react-bootstrap": "^0.32.0",
     "react-dom": "^16.2.0",
     "react-file-input": "^0.2.5",
     "react-scripts": "1.1.0",
+    "reactstrap": "^5.0.0-alpha.4",
     "xlsx": "^0.11.17"
   },
   "devDependencies": {

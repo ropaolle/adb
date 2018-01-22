@@ -1,5 +1,15 @@
 import XLSX from 'xlsx';
 
+export function getDateString(rawDate) {
+  if (!rawDate) return '-';
+
+  function pad(val) {
+    return (val > 9 ? '' : '0') + val;
+  }
+  const date = XLSX.SSF.parse_date_code(rawDate); // eslint-disable-line
+  return `${date.y}-${pad(date.m)}-${pad(date.d)}`;
+}
+
 function groupByFamily(worksheet) {
   let index = 0;
   return Object.values(worksheet).reduce((acc, row, i) => {
