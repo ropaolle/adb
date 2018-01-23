@@ -23,11 +23,21 @@ form.settings {
   right: 15px;
 }
 
+.progress {
+  margin: 5px 0;
+}
+
 #speicesSelect {
   margin-left: 5px;
 }
 
 /* Generated pages */
+/* .pages {
+  transform: scale(0.8);
+  font-size: 60% !important;
+  zoom: 80%;
+}
+ */
 
 .page {
   border: 1px solid #ccc;

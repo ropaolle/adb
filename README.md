@@ -19,3 +19,5 @@
 
 
 
+https://firebase.google.com/docs/storage/web/upload-files?authuser=0
+https://gist.github.com/mcdonamp/d4f1327b58ad69334ef06327184df790

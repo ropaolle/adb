@@ -1,8 +1,28 @@
 import React, { Component } from 'react';
-import { Form, FormGroup, Label, Input } from 'reactstrap';
+import { Form, FormGroup, Label, Input, Progress } from 'reactstrap';
 import parsXlsx from './utils/xlsx';
+import { storage } from './utils/firebase';
 import Pages from './pages/Pages';
+import Dialog from './pages/Dialog';
 import './App.css';
+
+// set it up
+// storage.constructor.prototype.putFiles = (filesObj) => {
+//   const filesArr = [...filesObj];
+//   return Promise.all(filesArr.map(file => storage.child(file.name).put(file)));
+// };
+
+storage.constructor.prototype.putFiles = (filesObj) => {
+  const filesArr = [...filesObj];
+  return Promise.all(filesArr.map((file) => {
+    const uploadTask = storage.child(file.name).put(file);
+    uploadTask.on('state_changed', (snapshot) => {
+      const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+      console.log(`${file.name} ${progress}%`);
+    });
+    return uploadTask;
+  }));
+};
 
 class App extends Component {
   constructor(props) {
@@ -12,6 +32,9 @@ class App extends Component {
       families: [],
       selected: 'all',
       completed: true,
+      uploads: [],
+      status: 0,
+      state: false,
     };
   }
 
@@ -25,7 +48,29 @@ class App extends Component {
   }
 
   handleFileUpload = (e) => {
-    console.log(e.target.files);
+    const files = e.target.files;
+    console.log(files);
+
+    const filesArr = [...files];
+    const uploads = filesArr.map((file, i) => ({ name: file.name, progress: 0, key: i }));
+    this.setState({ uploads });
+
+    const upload = Promise.all(filesArr.map((file, i) => {
+      const uploadTask = storage.child(file.name).put(file);
+      uploadTask.on('state_changed', (snapshot) => {
+        const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        uploads[i].progress = progress;
+        this.setState({ uploads });
+      });
+      return uploadTask;
+    }));
+
+    // use it!
+    upload.then((metadatas) => {
+      console.log('metadata', metadatas);
+    }).catch((error) => {
+      console.log('erroe', error);
+    });
   }
 
   handleSelect = (e) => {
@@ -38,13 +83,18 @@ class App extends Component {
   };
 
   render() {
-    const { families, selected, completed } = this.state;
+    const { families, selected, completed, uploads, state } = this.state;
 
     const selectOptions = families.map(family =>
       <option key={family.id} value={family.id}>{family.family}</option>);
 
     const filteredFamilies = (selected === 'all') ? families
       : families.filter(family => family.id === selected);
+
+    const progress = uploads.map(file => (
+      <Progress striped color="success" value={file.progress} key={file.key}>
+        {file.name} {file.progress}%
+      </Progress>));
 
     return (
       <div className="page-wrapper">
@@ -53,6 +103,10 @@ class App extends Component {
           <div className="help-link">
             <a href="lib/Howto.htm">Beskär bilder med Fotor</a>
           </div>
+
+          {progress}
+
+          <Dialog state={state} />
 
           <Form inline className="settings">
             <FormGroup>

@@ -4,6 +4,8 @@
   "private": true,
   "dependencies": {
     "bootstrap": "^4.0.0-beta.3",
+    "firebase": "^4.9.0",
+    "firebase-admin": "^5.8.1",
     "lodash.chunk": "^4.2.0",
     "prop-types": "^15.6.0",
     "react": "^16.2.0",
