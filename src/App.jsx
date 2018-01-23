@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Form, FormGroup, Label, Input } from 'reactstrap';
+import Dropzone from 'react-dropzone';
 import parsXlsx from './utils/xlsx';
 import Pages from './pages/Pages';
 import './App.css';
@@ -12,7 +13,27 @@ class App extends Component {
       families: [],
       selected: 'all',
       completed: true,
+      images: [],
     };
+  }
+
+  onDrop = (acceptedFiles/* , rejectedFiles */) => {
+    // console.log(acceptedFiles);
+    // console.log(rejectedFiles);
+    this.setState({ images: acceptedFiles });
+  }
+
+  handleFileOpen = (e) => {
+    const file = e.target.files[0];
+    const filename = file.name;
+    parsXlsx(file).then((families) => {
+      this.setState({ families, filename });
+    });
+    e.target.value = '';
+  }
+
+  handleFileUpload = (e) => {
+    console.log(e.target.files);
   }
 
   handleSelect = (e) => {
@@ -24,23 +45,16 @@ class App extends Component {
     this.setState({ completed: e.target.checked });
   };
 
-  handleFileOpen = (e) => {
-    const file = e.target.files[0];
-    const filename = file.name;
-    parsXlsx(file).then((families) => {
-      this.setState({ families, filename });
-    });
-    e.target.value = '';
-  }
-
   render() {
-    const { families, selected, completed } = this.state;
+    const { families, selected, completed, images } = this.state;
 
     const selectOptions = families.map(family =>
       <option key={family.id} value={family.id}>{family.family}</option>);
 
     const filteredFamilies = (selected === 'all') ? families
       : families.filter(family => family.id === selected);
+
+    const imgs = images.map(img => <img src={img.preview} alt="a" />);
 
     return (
       <div className="page-wrapper">
@@ -49,6 +63,10 @@ class App extends Component {
           <div className="help-link">
             <a href="lib/Howto.htm">Beskär bilder med Fotor</a>
           </div>
+
+          <Dropzone onDrop={this.onDrop} />
+
+          {imgs}
 
           <Form inline className="settings">
             <FormGroup>
@@ -72,6 +90,14 @@ class App extends Component {
               Komplettmarkering
               </Label>
             </FormGroup>
+
+            <FormGroup className="file-upload">
+              <label className="btn btn-success btn-file" htmlFor="fileUpload">
+                Ladda upp bilder
+                <input type="file" onChange={this.handleFileUpload} id="fileUpload" multiple />
+              </label>
+            </FormGroup>
+
           </Form>
         </div>
 

@@ -13,8 +13,14 @@ form.settings {
   margin-right: 10px;
 }
 
-#fileInput {
+#fileInput, #fileUpload {
   display: none;
+}
+
+.file-upload {
+  position: absolute;
+  top: 21px;
+  right: 15px;
 }
 
 #speicesSelect {

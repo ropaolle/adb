@@ -1,9 +1,11 @@
 
 ### TODO
-* Upload files to firebase?
 * Tests
 * Deploy
-
+* Upload files to firebase?
+  - https://stackoverflow.com/questions/37335102/how-to-get-an-array-with-all-pictures
+  - https://github.com/react-dropzone/react-dropzone
+  
 ### Reactstrap
 * [Reactstrap](https://reactstrap.github.io/components/card/)
 
@@ -14,3 +16,6 @@
   </div>
 </CardImgOverlay>
 ```
+
+
+
