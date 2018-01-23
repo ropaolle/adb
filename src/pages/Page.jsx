@@ -3,13 +3,14 @@ import PropTypes from 'prop-types';
 import {
   Card,
   CardImg,
+  CardImgOverlay,
   CardBody,
   CardTitle,
   CardFooter,
 } from 'reactstrap';
 import chunk from 'lodash.chunk';
-import { getDateString } from './xlsx';
-
+import { dateToString } from '../utils/xlsx';
+import missing from './missing.svg';
 
 class Page extends Component {
   constructor(props) {
@@ -25,7 +26,7 @@ class Page extends Component {
         <h2 className="page-header">
           Artdatabanken<span>{compl ? 'Komplett' : ''}</span>
         </h2>
-        <div className="page-sub-header">
+        <div className="page-sub">
           <span className="klass">Klass:<i>{row.kingdom}</i></span>
           <span className="ordning">Ordning:<i>{row.order}</i></span>
           <span className="familj">Familj:<i>{row.family}</i></span>
@@ -34,22 +35,27 @@ class Page extends Component {
 
     const sexIcons = (item) => {
       if (!item.sex) return (<span />);
+
+      const icons = [];
       const hane = item.sex.toLocaleLowerCase().indexOf('hane');
       const hona = item.sex.toLocaleLowerCase().indexOf('hona');
-      const icons = [];
-      if (hane > hona) {
-        if (hona > -1) icons.push(<i className="fa fa-venus" key="1" />);
-        icons.push(<i className="fa fa-mars" key="2" />);
-      } else if (hona > hane) {
-        if (hane > -1) icons.push(<i className="fa fa-mars" key="3" />);
-        icons.push(<i className="fa fa-venus" key="4" />);
+      if (hane > -1) {
+        icons.push(<i className="fa fa-mars" key="1" />);
+        if (hona > hane) icons.push(<i className="fa fa-venus" key="2" />);
+      } else if (hona > -1) {
+        icons.push(<i className="fa fa-venus" key="2" />);
+        if (hona < hane) icons.push(<i className="fa fa-mars" key="4" />);
       }
       return (<span>{icons}</span>);
     };
 
+    // const imgSrc = image => ((image) ? `./images/${image}` : missing);
+    const imgSrc = image => ((image) ? './images/bird-500x500.jpg' : missing);
+
     const card = item => (
       <Card key={item.id}>
-        <CardImg top width="100%" src="./images/bird-500x500.jpg" alt={item.speices} />
+        <CardImg top width="100%" src={imgSrc(item.image)} alt={item.speices} />
+        {!item.image && <CardImgOverlay>Saknas</CardImgOverlay>}
         <CardBody>
           <CardTitle>
             <span>{item.speices}{' '}</span>
@@ -60,19 +66,17 @@ class Page extends Component {
         <CardFooter>
           <span>{item.place}</span>
           {item.county && <span> ({item.county})</span>}
-          <span className="float-right">{getDateString(item.date)}</span>
+          <span className="float-right">{dateToString(item.date)}</span>
         </CardFooter>
       </Card>);
 
-    const cards = data => chunk(data, 3).map((row) => {
-      console.log('row', row);
-      return (<div className="card-deck mb-4" key={row[0].id}>
+    const cards = data => chunk(data, 3).map(row =>
+      (<div className="card-deck mb-4" key={row[0].id}>
         {row.map(item => card(item))}
-      </div>);
-    });
-
-    // console.log('p2', page);
-    // console.log('p3', completed);
+        {/* TODO: Row format wrong if we don't supply 3 rows. */}
+        {row.length < 3 && <Card className="dummy" key="dummyCard01" />}
+        {row.length < 2 && <Card className="dummy" key="dummyCard02" />}
+      </div>));
 
     return (
       <div className="page">

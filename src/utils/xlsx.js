@@ -1,30 +1,25 @@
 import XLSX from 'xlsx';
 
-export function getDateString(rawDate) {
-  if (!rawDate) return '-';
-
-  function pad(val) {
-    return (val > 9 ? '' : '0') + val;
-  }
-  const date = XLSX.SSF.parse_date_code(rawDate); // eslint-disable-line
-  return `${date.y}-${pad(date.m)}-${pad(date.d)}`;
+export function dateToString(rawDate) {
+  return XLSX.SSF.format('YYYY-MM-DD', rawDate) || '-';
 }
 
 function groupByFamily(worksheet) {
-  let index = 0;
-  return Object.values(worksheet).reduce((acc, row, i) => {
-    const newFamily = { family: row.family, data: [{ ...row, id: i }], completed: !!row.date };
-    if (i === 0) {
-      acc[index] = newFamily;
-    } else if (acc[index].family !== row.family) {
-      index += 1;
-      acc[index] = newFamily;
+  const families = [];
+  Object.values(worksheet).forEach((row, i) => {
+    if (i === 0 || families[families.length - 1].family !== row.family) {
+      families.push({
+        family: row.family,
+        data: [{ ...row, id: i }],
+        completed: !!row.date,
+        id: i.toString(),
+      });
     } else {
-      acc[index].data.push({ ...row, id: i });
-      if (!row.date) acc[index].completed = false;
+      families[families.length - 1].data.push({ ...row, id: i });
     }
-    return acc;
-  }, []);
+    if (!row.date) families[families.length - 1].completed = false;
+  });
+  return families;
 }
 
 function fileType(type) {

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Form, FormGroup, Label, Input } from 'reactstrap';
-import parsXlsx from './xlsx';
-import Pages from './Pages';
+import parsXlsx from './utils/xlsx';
+import Pages from './pages/Pages';
 import './App.css';
 
 class App extends Component {
@@ -10,12 +10,19 @@ class App extends Component {
     this.state = {
       filename: '',
       families: [],
+      selected: 'all',
+      completed: true,
     };
   }
 
-  // handleChange = (e) => {
-  //   this.setState({ value: e.target.value });
-  // };
+  handleSelect = (e) => {
+    // TODO: Support passive event listeners https://github.com/facebook/react/issues/6436.
+    this.setState({ selected: e.target.value });
+  };
+
+  handleCheckbox = (e) => {
+    this.setState({ completed: e.target.checked });
+  };
 
   handleFileOpen = (e) => {
     const file = e.target.files[0];
@@ -27,41 +34,48 @@ class App extends Component {
   }
 
   render() {
-    const { families } = this.state;
+    const { families, selected, completed } = this.state;
+
+    const selectOptions = families.map(family =>
+      <option key={family.id} value={family.id}>{family.family}</option>);
+
+    const filteredFamilies = (selected === 'all') ? families
+      : families.filter(family => family.id === selected);
 
     return (
-      <div>
+      <div className="page-wrapper">
         <div className="header">
-          <h1>Artdatabanken</h1>
+          <h1>Artdatabanken sidgenerator</h1>
           <div className="help-link">
             <a href="lib/Howto.htm">Beskär bilder med Fotor</a>
           </div>
 
-          <Form inline>
+          <Form inline className="settings">
             <FormGroup>
               <label className="btn btn-primary btn-file" htmlFor="fileInput">
               Öppna Excelfil
                 <input type="file" onChange={this.handleFileOpen} id="fileInput" />
               </label>
             </FormGroup>
-            <FormGroup controlid="formControlsSelect">
-              <Label>Familj</Label>
-              <Input type="select" name="select" id="exampleSelect">
-                <option value="select">select</option>
-                <option value="other">...</option>
+
+            <FormGroup>
+              <Label for="speicesSelect" >Familj</Label>
+              <Input type="select" name="select" id="speicesSelect" onChange={this.handleSelect}>
+                <option value="all">alla</option>
+                {selectOptions}
               </Input>
             </FormGroup>
 
             <FormGroup check>
               <Label check>
-                <Input type="checkbox" />{' '}
+                <Input type="checkbox" checked={completed} onChange={this.handleCheckbox} />{' '}
               Komplettmarkering
               </Label>
             </FormGroup>
           </Form>
         </div>
 
-        {families && <Pages families={families} />}
+        {families && <Pages families={filteredFamilies} completed={completed} />}
       </div>
     );
   }
