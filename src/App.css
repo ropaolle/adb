@@ -3,6 +3,23 @@
   margin: 20px 0;
 }
 
+.thumbnail {
+  max-width: 100%;
+}
+
+.btn-file-upload, .show-images {
+  float: right;
+}
+
+.show-images {
+  margin-right: 10px;
+}
+
+.progress-wrapper {
+  margin-bottom: 15px;
+}
+
+
 /* Main page */
 .app .nav {
   background: #eee;
