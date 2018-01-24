@@ -5,6 +5,7 @@ import './App.css';
 import AppNavbar from './AppNavbar';
 import Home from './pages/home/Home';
 import Adb from './pages/adb/Adb';
+import Images from './pages/images/Images';
 
 const App = () => (
   <Router>
@@ -12,6 +13,7 @@ const App = () => (
       <AppNavbar />
       <Route exact path="/" component={Home} />
       <Route path="/adb" component={Adb} />
+      <Route path="/images" component={Images} />
       <Route path="/help" component={Adb} />
     </div>
   </Router>

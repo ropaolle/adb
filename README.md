@@ -19,3 +19,5 @@ git push origin master
 [File upload](https://firebase.google.com/docs/storage/web/upload-files?authuser=0)
 [File upload](https://gist.github.com/mcdonamp/d4f1327b58ad69334ef06327184df790)
 [Reactstrap colors](https://github.com/twbs/bootstrap/pull/22836#issuecomment-310945638)
+
+https://getbootstrap.com/docs/4.0/layout/grid/

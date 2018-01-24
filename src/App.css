@@ -1,3 +1,8 @@
+
+.page-content {
+  margin: 20px 0;
+}
+
 /* Main page */
 .app .nav {
   background: #eee;
@@ -27,11 +32,11 @@ form.settings {
   display: none;
 }
 
-.file-upload {
+/* .file-upload {
   position: absolute;
   top: 121px;
   right: 15px;
-}
+} */
 
 .progress {
   margin: 5px 0;
