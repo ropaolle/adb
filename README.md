@@ -15,6 +15,7 @@ git remote add origin git@github.com:ropaolle/adb.git
 git push origin master
 ```
 
-### File uploads
-[Example](https://firebase.google.com/docs/storage/web/upload-files?authuser=0)
-[Example](https://gist.github.com/mcdonamp/d4f1327b58ad69334ef06327184df790)
+### Info
+[File upload](https://firebase.google.com/docs/storage/web/upload-files?authuser=0)
+[File upload](https://gist.github.com/mcdonamp/d4f1327b58ad69334ef06327184df790)
+[Reactstrap colors](https://github.com/twbs/bootstrap/pull/22836#issuecomment-310945638)
