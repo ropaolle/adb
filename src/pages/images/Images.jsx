@@ -1,33 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Button, Progress, Container, Row, Col, Alert } from 'reactstrap';
-import { database, storage } from '../../utils/firebase';
-
-function uploadImages(fileArr, updateState) {
-  return Promise.all(
-    fileArr.map((file, i) => {
-      const uploadTask = storage.child(`images/${file.name}`).put(file);
-      uploadTask.on(
-        'state_changed',
-        (/* snapshot */) => {},
-        (error) => {
-          console.log('Image upload error', error);
-        },
-        () => {
-          // Save downloadURL in database
-          const { downloadURL, metadata } = uploadTask.snapshot;
-          database
-            .collection('images')
-            .doc(metadata.name)
-            .set({ downloadURL });
-          // Update page state
-          updateState(i, downloadURL);
-        },
-      );
-      return uploadTask;
-    }),
-  );
-}
 
 class Images extends Component {
   constructor(props) {
@@ -45,11 +18,10 @@ class Images extends Component {
     this.setState({ images: props.images });
   }
 
-  updateState = (i, downloadURL) => {
+  updateState = (i, url) => {
     const { status } = this.state;
     status[i].uploaded = true;
-    status[i].url = downloadURL;
-    this.setState({ status });
+    status[i].url = url;
   };
 
   handleFileUpload = (e) => {
@@ -57,13 +29,8 @@ class Images extends Component {
     const fileArr = [...files];
     const status = fileArr.map((file, i) => ({ name: file.name, uploaded: false, key: i }));
     this.setState({ status });
-    uploadImages(fileArr, this.updateState)
-      .then((/* metadatas */) => {
-        // All files uploaded
-      })
-      .catch((error) => {
-        console.log('error', error);
-      });
+
+    this.props.uploadImages(fileArr, this.updateState);
   };
 
   handleShowImages = () => {
@@ -74,7 +41,7 @@ class Images extends Component {
     const { status, alert, images, showImages } = this.state;
 
     const progress = () => {
-      const currProg = status.filter(val => val.uploaded === true).length / status.length * 100;
+      const currProg = (status.filter(val => val.uploaded === true).length / status.length) * 100;
       return (
         !!status.length && (
           <Progress striped color="success" value={currProg}>
@@ -84,8 +51,19 @@ class Images extends Component {
       );
     };
 
+    const sort = (a, b) => {
+      if (a.name < b.name) {
+        return -1;
+      }
+      if (a.name > b.name) {
+        return 1;
+      }
+
+      return 0;
+    };
+
     const imageList = imgs =>
-      imgs.filter(file => file.url !== undefined).map(file => (
+      imgs.filter(file => file.url !== undefined).sort(sort).map(file => (
         <Col className="col-4 col-md-3" key={file.name}>
           <div>
             <img className="thumbnail" src={file.url} alt={file.name} />
@@ -135,6 +113,7 @@ Images.propTypes = {
       url: PropTypes.string.isRequired,
     }),
   ).isRequired,
+  uploadImages: PropTypes.func.isRequired,
 };
 
 export default Images;

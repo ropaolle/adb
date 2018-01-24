@@ -31,3 +31,27 @@ export const loadImages = () => database.collection('images')
     console.log('Loaded images', images.length);
     return images;
   });
+
+export const uploadImages = (fileArr, updateState) => Promise.all(
+  fileArr.map((file, i) => {
+    const uploadTask = storage.child(`images/${file.name}`).put(file);
+    uploadTask.on(
+      'state_changed',
+      (/* snapshot */) => {},
+      (error) => {
+        console.log('Image upload error', error);
+      },
+      () => {
+        // Save downloadURL in database
+        const { downloadURL, metadata } = uploadTask.snapshot;
+        database
+          .collection('images')
+          .doc(metadata.name)
+          .set({ downloadURL });
+        // Update page state
+        updateState(i, downloadURL, metadata.name);
+      },
+    );
+    return uploadTask;
+  }),
+);

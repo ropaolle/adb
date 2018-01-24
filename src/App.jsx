@@ -6,7 +6,7 @@ import Home from './pages/home/Home';
 import Generator from './pages/generator/Generator';
 import Images from './pages/images/Images';
 import Help from './pages/help/Help';
-import { loadImages } from './utils/firebase';
+import { loadImages, uploadImages } from './utils/firebase';
 
 class App extends Component {
   constructor(props) {
@@ -21,6 +21,27 @@ class App extends Component {
     });
   }
 
+  uploadImages = (files, updateStatus) => {
+    const images = this.state.images.slice(0); // Clone images
+
+    uploadImages(files, updateStatus).then((uploadedImages) => {
+      uploadedImages.forEach((uploadedImage) => {
+        const { name, downloadURLs } = uploadedImage.metadata;
+        const foundImage = images.find(image => image.name === name);
+        if (foundImage) {
+          foundImage.url = downloadURLs[0];
+        } else {
+          images.push({
+            name,
+            url: downloadURLs[0],
+            uploaded: true,
+          });
+        }
+        this.setState({ images });
+      });
+    });
+  }
+
   render() {
     return (<Router>
       <div className="app">
@@ -28,7 +49,11 @@ class App extends Component {
 
         <Route exact path="/" component={Home} />
         <Route path="/generator" component={Generator} />
-        <Route path="/images" render={routeProps => <Images {...routeProps} images={this.state.images} />} />
+        <Route
+          path="/images"
+          render={routeProps =>
+            <Images {...routeProps} images={this.state.images} uploadImages={this.uploadImages} />}
+        />
         <Route path="/help" component={Help} />
       </div>
     </Router>);
