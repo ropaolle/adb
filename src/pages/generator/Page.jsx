@@ -9,8 +9,8 @@ import {
   CardFooter,
 } from 'reactstrap';
 import chunk from 'lodash.chunk';
-import { dateToString } from '../utils/xlsx';
-import missing from './missing.svg';
+import { dateToString } from '../../utils/xlsx';
+import missing from '../missing.svg';
 
 class Page extends Component {
   constructor(props) {
@@ -49,8 +49,9 @@ class Page extends Component {
       return (<span>{icons}</span>);
     };
 
+    const imgSrc = image => ((image) ? 'https://firebasestorage.googleapis.com/v0/b/budget-ec3f9.appspot.com/o/images%2Fbild002.jpg?alt=media&token=3e77f658-771e-41b1-ac86-918018902897' : missing);
     // const imgSrc = image => ((image) ? `./images/${image}` : missing);
-    const imgSrc = image => ((image) ? './images/bird-500x500.jpg' : missing);
+    // const imgSrc = image => ((image) ? './images/bird-500x500.jpg' : missing);
 
     const card = item => (
       <Card key={item.id}>

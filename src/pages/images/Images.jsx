@@ -1,18 +1,25 @@
 import React, { Component } from 'react';
 import { Form, FormGroup, Progress, Container, Row, Col } from 'reactstrap';
 import { storage } from '../../utils/firebase';
+import { database } from '../../utils/firebase';
 
-storage.constructor.prototype.putFiles = (filesObj) => {
-  const filesArr = [...filesObj];
-  return Promise.all(filesArr.map((file) => {
-    const uploadTask = storage.child(file.name).put(file);
-    uploadTask.on('state_changed', (snapshot) => {
-      const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-      console.log(`${file.name} ${progress}%`);
-    });
-    return uploadTask;
-  }));
-};
+/* TODO
+- Ladda upp filer och lagra länk i db.
+-
+
+*/
+
+// storage.constructor.prototype.putFiles = (filesObj) => {
+//   const filesArr = [...filesObj];
+//   return Promise.all(filesArr.map((file) => {
+//     const uploadTask = storage.child(file.name).put(file);
+//     uploadTask.on('state_changed', (snapshot) => {
+//       const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+//       console.log(`${file.name} ${progress}%`);
+//     });
+//     return uploadTask;
+//   }));
+// };
 
 class Images extends Component {
   constructor(props) {
@@ -31,11 +38,18 @@ class Images extends Component {
     this.setState({ uploads });
 
     const upload = Promise.all(filesArr.map((file, i) => {
-      const uploadTask = storage.child(file.name).put(file);
+      const uploadTask = storage.child(`images/${file.name}`).put(file);
       uploadTask.on('state_changed', (snapshot) => {
         const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
         uploads[i].progress = progress;
         this.setState({ uploads });
+      }, (error) => {
+        console.log('error', error);
+      }, () => {
+        const { downloadURL, metadata } = uploadTask.snapshot;
+        console.log('done, url', downloadURL);
+        // console.log('done', uploadTask.snapshot);
+        database.collection('images').doc(metadata.name).set({ downloadURL });
       });
       return uploadTask;
     }));
@@ -57,7 +71,7 @@ class Images extends Component {
       </Progress>));
 
     return (
-      <Container fluid classname="page-content">
+      <Container fluid className="page-content">
         <Row>
           <Col md="6"><h1>Bilder</h1></Col>
           <Col md="6">
