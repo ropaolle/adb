@@ -1,4 +1,14 @@
 /* Main page */
+.app .nav {
+  background: #eee;
+  padding-top: 5px;
+}
+
+.nav-link.logo.disabled {
+  font-weight: bold;
+  color: #555;
+
+}
 
 .page-wrapper {
   margin: 15px;
@@ -19,7 +29,7 @@ form.settings {
 
 .file-upload {
   position: absolute;
-  top: 21px;
+  top: 121px;
   right: 15px;
 }
 
