@@ -69,13 +69,6 @@ export default class PageGenerator extends Component {
               </Label>
             </FormGroup>
 
-            <FormGroup className="file-upload">
-              <label className="btn btn-success btn-file" htmlFor="fileUpload">
-                Ladda upp bilder
-                <input type="file" onChange={this.handleFileUpload} id="fileUpload" multiple />
-              </label>
-            </FormGroup>
-
           </Form>
         </div>
 
