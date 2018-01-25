@@ -1,9 +1,25 @@
+/**
+ * App
+**/
+
+.app .nav {
+  background: #eee;
+  padding-top: 5px;
+}
+
+.nav-link.logo.disabled {
+  font-weight: bold;
+  color: #555;
+}
 
 .page-content {
   margin: 20px 0;
 }
 
-/* help page */
+/**
+ * Help page
+**/
+
 .help-page img {
   max-width: 50%
 }
@@ -11,6 +27,10 @@
 .help-page li {
   margin: 10px 0;
 }
+
+/**
+ * Images
+**/
 
 .thumbnail {
   max-width: 100%;
@@ -28,21 +48,12 @@
   margin-bottom: 15px;
 }
 
+/**
+ * Generator
+**/
 
-/* Main page */
-.app .nav {
-  background: #eee;
-  padding-top: 5px;
-}
-
-.nav-link.logo.disabled {
-  font-weight: bold;
-  color: #555;
-
-}
-
-.page-wrapper {
-  margin: 15px;
+.alert:empty {
+  display: none;
 }
 
 form.settings {
@@ -58,27 +69,17 @@ form.settings {
   display: none;
 }
 
-/* .file-upload {
-  position: absolute;
-  top: 121px;
-  right: 15px;
-} */
+#speicesSelect {
+  margin-left: 5px;
+}
 
 .progress {
   margin: 5px 0;
 }
 
-#speicesSelect {
-  margin-left: 5px;
-}
-
-/* Generated pages */
-/* .pages {
-  transform: scale(0.8);
-  font-size: 60% !important;
-  zoom: 80%;
-}
- */
+/**
+ * Dynamic pages
+**/
 
 .page {
   border: 1px solid #ccc;
@@ -92,7 +93,6 @@ form.settings {
   font-size: 2.3rem;
   text-align: center;
   border-bottom: 2px solid #999;
-  /* margin-top: -15px; */
 }
 
 .page-sub {
@@ -161,7 +161,7 @@ form.settings {
 }
 
 @media print {
-  .header {
+  .page-content {
     display: none;
   }
 
@@ -171,9 +171,6 @@ form.settings {
     max-width: auto;
     min-height: auto;
     margin-top: 0;
-  }
-
-  .page-header {
     page-break-before: always;
   }
 

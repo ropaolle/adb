@@ -6,25 +6,33 @@ import Home from './pages/home/Home';
 import Generator from './pages/generator/Generator';
 import Images from './pages/images/Images';
 import Help from './pages/help/Help';
+import parsXlsx from './utils/xlsx';
 import { loadImages, uploadImages } from './utils/firebase';
 
 class App extends Component {
   constructor(props) {
     super(props);
 
-    this.state = { images: [] };
+    this.state = { images: [], families: [] };
   }
 
   componentDidMount = () => {
     loadImages().then((images) => {
       this.setState({ images });
     });
-  }
+  };
 
-  uploadImages = (files, updateStatus) => {
+  loadXlsx = (file, updateState) => {
+    parsXlsx(file).then((families) => {
+      this.setState({ families });
+      updateState(file.name, families.length);
+    });
+  };
+
+  uploadImages = (files, updateState) => {
     const images = this.state.images.slice(0); // Clone images
 
-    uploadImages(files, updateStatus).then((uploadedImages) => {
+    uploadImages(files, updateState).then((uploadedImages) => {
       uploadedImages.forEach((uploadedImage) => {
         const { name, downloadURLs } = uploadedImage.metadata;
         const imageInCache = images.find(image => image.name === name);
@@ -42,23 +50,38 @@ class App extends Component {
         this.setState({ images });
       });
     });
-  }
+  };
 
   render() {
-    return (<Router>
-      <div className="app">
-        <AppNavbar />
+    const { images, families } = this.state;
 
-        <Route exact path="/" component={Home} />
-        <Route path="/generator" component={Generator} />
-        <Route
-          path="/images"
-          render={routeProps =>
-            <Images {...routeProps} images={this.state.images} uploadImages={this.uploadImages} />}
-        />
-        <Route path="/help" component={Help} />
-      </div>
-    </Router>);
+    return (
+      <Router>
+        <div className="app">
+          <AppNavbar />
+
+          <Route exact path="/" component={Home} />
+          <Route
+            path="/generator"
+            render={routeProps => (
+              <Generator
+                {...routeProps}
+                images={images}
+                families={families}
+                loadXlsx={this.loadXlsx}
+              />
+            )}
+          />
+          <Route
+            path="/images"
+            render={routeProps => (
+              <Images {...routeProps} images={images} uploadImages={this.uploadImages} />
+            )}
+          />
+          <Route path="/help" component={Help} />
+        </div>
+      </Router>
+    );
   }
 }
 

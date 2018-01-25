@@ -1,26 +1,27 @@
 import React, { Component } from 'react';
-import { Form, FormGroup, Label, Input } from 'reactstrap';
-import parsXlsx from '../../utils/xlsx';
+import PropTypes from 'prop-types';
+import { Form, FormGroup, Label, Input, Container, Col, Row, Alert } from 'reactstrap';
 import Pages from './Pages';
 
-export default class PageGenerator extends Component {
+class PageGenerator extends Component {
   constructor(props) {
     super(props);
+
     this.state = {
-      filename: '',
-      families: [],
-      selected: 'all',
+      selected: '',
       completed: true,
+      alert: '',
     };
   }
 
+  updateState = (filename, length) => {
+    const alert = <span><b>{filename}</b> laddad. <b>{length}</b> familjer hittade.</span>;
+    this.setState({ alert });
+  };
+
   handleFileOpen = (e) => {
     const file = e.target.files[0];
-    const filename = file.name;
-    parsXlsx(file).then((families) => {
-      this.setState({ families, filename });
-    });
-    e.target.value = '';
+    this.props.loadXlsx(file, this.updateState);
   }
 
   handleSelect = (e) => {
@@ -33,7 +34,8 @@ export default class PageGenerator extends Component {
   };
 
   render() {
-    const { families, selected, completed } = this.state;
+    const { selected, completed, alert } = this.state;
+    const { images, families } = this.props;
 
     const selectOptions = families.map(family =>
       <option key={family.id} value={family.id}>{family.family}</option>);
@@ -42,23 +44,29 @@ export default class PageGenerator extends Component {
       : families.filter(family => family.id === selected);
 
     return (
-      <div className="page-wrapper">
-        <div className="header">
-          <h1>Sidgenerator</h1>
+      <div>
+        <Container fluid className="page-content generator-page">
+          <Alert color="success">
+            {alert}
+          </Alert>
+
+          <Row>
+            <Col><h1>Sidgenerator</h1></Col>
+            <Col>
+              <label className="btn btn-primary float-right" htmlFor="fileInput">
+              Ladda Excelfil
+                <input type="file" onChange={this.handleFileOpen} id="fileInput" />
+              </label>
+            </Col>
+          </Row>
 
           <Form inline className="settings">
             <FormGroup>
-              <label className="btn btn-primary btn-file" htmlFor="fileInput">
-              Öppna Excelfil
-                <input type="file" onChange={this.handleFileOpen} id="fileInput" />
-              </label>
-            </FormGroup>
-
-            <FormGroup>
               <Label for="speicesSelect" >Familj</Label>
               <Input type="select" name="select" id="speicesSelect" onChange={this.handleSelect}>
-                <option value="all">alla</option>
+                <option value="">Välj familj...</option>
                 {selectOptions}
+                <option value="all">Alla</option>
               </Input>
             </FormGroup>
 
@@ -68,12 +76,32 @@ export default class PageGenerator extends Component {
               Komplettmarkering
               </Label>
             </FormGroup>
-
           </Form>
-        </div>
 
-        {families && <Pages families={filteredFamilies} completed={completed} />}
+        </Container>
+
+        {families && <Pages families={filteredFamilies} completed={completed} images={images} />}
       </div>
     );
   }
 }
+
+PageGenerator.propTypes = {
+  images: PropTypes.arrayOf(
+    PropTypes.shape({
+      name: PropTypes.string.isRequired,
+      url: PropTypes.string.isRequired,
+      uploaded: PropTypes.bool.isRequired,
+    }),
+  ).isRequired,
+  loadXlsx: PropTypes.func.isRequired,
+  families: PropTypes.arrayOf(
+    PropTypes.shape({
+      family: PropTypes.string.isRequired,
+      data: PropTypes.array.isRequired,
+      completed: PropTypes.bool.isRequired,
+    }),
+  ).isRequired,
+};
+
+export default PageGenerator;
