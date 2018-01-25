@@ -13,7 +13,7 @@ class App extends Component {
   constructor(props) {
     super(props);
 
-    this.state = { images: [], families: [] };
+    this.state = { images: [], families: [], alert: '' };
   }
 
   componentDidMount = () => {
@@ -22,10 +22,11 @@ class App extends Component {
     });
   };
 
-  loadXlsx = (file, updateState) => {
+  loadXlsx = (file/* , updateState */) => {
     parsXlsx(file).then((families) => {
-      this.setState({ families });
-      updateState(file.name, families.length);
+      const alert = (<span>
+        <b>{file.name}</b> laddad. <b>{families.length}</b> familjer hittade.</span>);
+      this.setState({ families, alert });
     });
   };
 
@@ -53,7 +54,7 @@ class App extends Component {
   };
 
   render() {
-    const { images, families } = this.state;
+    const { images, families, alert } = this.state;
 
     return (
       <Router>
@@ -69,6 +70,7 @@ class App extends Component {
                 images={images}
                 families={families}
                 loadXlsx={this.loadXlsx}
+                alert={alert}
               />
             )}
           />

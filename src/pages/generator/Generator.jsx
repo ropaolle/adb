@@ -10,18 +10,17 @@ class PageGenerator extends Component {
     this.state = {
       selected: '',
       completed: true,
-      alert: '',
     };
   }
 
-  updateState = (filename, length) => {
-    const alert = <span><b>{filename}</b> laddad. <b>{length}</b> familjer hittade.</span>;
-    this.setState({ alert });
-  };
+  // updateState = (filename, length) => {
+  //   const alert = <span><b>{filename}</b> laddad. <b>{length}</b> familjer hittade.</span>;
+  //   this.setState({ alert });
+  // };
 
   handleFileOpen = (e) => {
     const file = e.target.files[0];
-    this.props.loadXlsx(file, this.updateState);
+    this.props.loadXlsx(file/* , this.updateState */);
   }
 
   handleSelect = (e) => {
@@ -34,8 +33,8 @@ class PageGenerator extends Component {
   };
 
   render() {
-    const { selected, completed, alert } = this.state;
-    const { images, families } = this.props;
+    const { selected, completed } = this.state;
+    const { images, families, alert } = this.props;
 
     const selectOptions = families.map(family =>
       <option key={family.id} value={family.id}>{family.family}</option>);
@@ -95,6 +94,7 @@ PageGenerator.propTypes = {
     }),
   ).isRequired,
   loadXlsx: PropTypes.func.isRequired,
+  alert: PropTypes.string.isRequired,
   families: PropTypes.arrayOf(
     PropTypes.shape({
       family: PropTypes.string.isRequired,
