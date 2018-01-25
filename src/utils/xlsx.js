@@ -1,4 +1,5 @@
 import XLSX from 'xlsx';
+import { storeFamilies } from './firebase';
 
 export function dateToString(rawDate) {
   return XLSX.SSF.format('YYYY-MM-DD', rawDate) || '-';
@@ -57,7 +58,12 @@ export default function parsXlsx(file) {
       ];
 
       const worksheet = XLSX.utils.sheet_to_json(worksheetRaw, { header, raw: true, range: 1 });
-      resolve(groupByFamily(worksheet));
+
+      // Save families to database
+      const families = groupByFamily(worksheet);
+      storeFamilies(families);
+
+      resolve(families);
     };
 
     reader.onerror = (err) => {

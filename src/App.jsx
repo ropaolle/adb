@@ -7,7 +7,7 @@ import Generator from './pages/generator/Generator';
 import Images from './pages/images/Images';
 import Help from './pages/help/Help';
 import parsXlsx from './utils/xlsx';
-import { loadImages, uploadImages } from './utils/firebase';
+import { loadImages, uploadImages, loadFamilies } from './utils/firebase';
 
 class App extends Component {
   constructor(props) {
@@ -20,13 +20,15 @@ class App extends Component {
     loadImages().then((images) => {
       this.setState({ images });
     });
+
+    loadFamilies().then((families) => {
+      this.setState({ families, alert: 'databasen' });
+    });
   };
 
   loadXlsx = (file/* , updateState */) => {
     parsXlsx(file).then((families) => {
-      const alert = (<span>
-        <b>{file.name}</b> laddad. <b>{families.length}</b> familjer hittade.</span>);
-      this.setState({ families, alert });
+      this.setState({ families, alert: file.name });
     });
   };
 
