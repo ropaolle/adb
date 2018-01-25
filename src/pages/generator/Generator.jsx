@@ -46,7 +46,7 @@ class PageGenerator extends Component {
       <div>
         <Container fluid className="page-content generator-page">
           <Alert color="success">
-            {alert}
+            {alert && <span><b>{families.length}</b> familjer inlästa från <b>{alert}</b>.</span>}
           </Alert>
 
           <Row>

@@ -57,3 +57,19 @@ export const uploadImages = (fileArr, updateState) => Promise.all(
     return uploadTask;
   }),
 );
+
+export const storeFamilies = (families) => {
+  database
+    .collection('families')
+    .doc('default')
+    .set({ families });
+};
+
+export const loadFamilies = () => database.collection('families').doc('default')
+  .get()
+  .then((snapshot) => {
+    const { families } = snapshot.data();
+    console.log('Loaded families', families);
+
+    return families;
+  });
