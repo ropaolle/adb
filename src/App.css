@@ -32,8 +32,16 @@
  * Images
 **/
 
-.thumbnail {
+.image-grid .col {
+  margin-bottom: 10px;
+}
+
+.image-grid .thumbnail {
   max-width: 100%;
+}
+
+.image-grid .filename {
+  font-size: 12px;
 }
 
 .btn-file-upload, .show-images {

@@ -64,11 +64,11 @@ class Images extends Component {
 
     const imageList = imgs =>
       imgs.filter(file => file.url !== undefined).sort(sort).map(file => (
-        <Col className="col-6 col-sm-4 col-md-4 col-lg-3 col-xl-2" key={file.name}>
+        <Col className="col-6 col-sm-4 col-md-4 col-lg-3 col-xl-2 col" key={file.name}>
           <div>
             <img className="thumbnail" src={file.url} alt={file.name} />
           </div>
-          <div>{file.name}</div>
+          <div className="filename">{file.name}</div>
         </Col>
       ));
 
@@ -97,10 +97,10 @@ class Images extends Component {
           </Col>
         </Row>
 
-        <Row>{imageList(status)}</Row>
+        <Row className="image-grid">{imageList(status)}</Row>
 
         {showImages && <Row><Col><h2>Alla uppladdade bilder</h2></Col></Row>}
-        <Row>{showImages && imageList(images)}</Row>
+        <Row className="image-grid">{showImages && imageList(images)}</Row>
       </Container>
     );
   }
