@@ -27,9 +27,10 @@ class App extends Component {
     uploadImages(files, updateStatus).then((uploadedImages) => {
       uploadedImages.forEach((uploadedImage) => {
         const { name, downloadURLs } = uploadedImage.metadata;
-        const foundImage = images.find(image => image.name === name);
-        if (foundImage) {
-          foundImage.url = downloadURLs[0];
+        const imageInCache = images.find(image => image.name === name);
+        // If image in cache update url, if not add image.
+        if (imageInCache) {
+          imageInCache.url = downloadURLs[0];
         } else {
           images.push({
             name,
@@ -37,6 +38,7 @@ class App extends Component {
             uploaded: true,
           });
         }
+
         this.setState({ images });
       });
     });

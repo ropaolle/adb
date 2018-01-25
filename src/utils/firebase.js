@@ -29,6 +29,7 @@ export const loadImages = () => database.collection('images')
       images.push({ name: doc.id, url: doc.data().downloadURL, uploaded: true });
     });
     console.log('Loaded images', images.length);
+
     return images;
   });
 
@@ -52,6 +53,7 @@ export const uploadImages = (fileArr, updateState) => Promise.all(
         updateState(i, downloadURL, metadata.name);
       },
     );
+
     return uploadTask;
   }),
 );

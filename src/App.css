@@ -3,6 +3,15 @@
   margin: 20px 0;
 }
 
+/* help page */
+.help-page img {
+  max-width: 50%
+}
+
+.help-page li {
+  margin: 10px 0;
+}
+
 .thumbnail {
   max-width: 100%;
 }
