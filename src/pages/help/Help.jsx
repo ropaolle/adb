@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Progress, Container, Row, Col, Alert } from 'reactstrap';
+import { Container } from 'reactstrap';
 import fotor01b from './fotor01b.jpg';
 import fotor02b from './fotor02b.jpg';
 import fotor03b from './fotor03b.png';

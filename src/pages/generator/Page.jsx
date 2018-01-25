@@ -19,7 +19,7 @@ class Page extends Component {
   }
 
   render() {
-    const { page, completed } = this.props;
+    const { page, completed, images } = this.props;
 
     const pageHeader = (row, compl) => (
       <div>
@@ -49,9 +49,10 @@ class Page extends Component {
       return (<span>{icons}</span>);
     };
 
-    const imgSrc = image => ((image) ? 'https://firebasestorage.googleapis.com/v0/b/budget-ec3f9.appspot.com/o/images%2Fbild002.jpg?alt=media&token=3e77f658-771e-41b1-ac86-918018902897' : missing);
-    // const imgSrc = image => ((image) ? `./images/${image}` : missing);
-    // const imgSrc = image => ((image) ? './images/bird-500x500.jpg' : missing);
+    const imgSrc = (name) => {
+      const imageExists = images.find(image => image.name === name);
+      return (imageExists) ? imageExists.url : missing;
+    };
 
     const card = item => (
       <Card key={item.id}>
@@ -102,6 +103,13 @@ Page.propTypes = {
     speices: PropTypes.string,
     speices_latin: PropTypes.string,
   })).isRequired,
+  images: PropTypes.arrayOf(
+    PropTypes.shape({
+      name: PropTypes.string.isRequired,
+      url: PropTypes.string.isRequired,
+      uploaded: PropTypes.bool.isRequired,
+    }),
+  ).isRequired,
 };
 
 export default Page;

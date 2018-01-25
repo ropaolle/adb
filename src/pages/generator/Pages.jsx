@@ -11,6 +11,7 @@ const Pages = function dude(props) {
         page={page}
         completed={family.completed && props.completed}
         key={page[0].id}
+        images={props.images}
       />
     )),
   );

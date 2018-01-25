@@ -64,7 +64,7 @@ class Images extends Component {
 
     const imageList = imgs =>
       imgs.filter(file => file.url !== undefined).sort(sort).map(file => (
-        <Col className="col-4 col-md-3" key={file.name}>
+        <Col className="col-6 col-sm-4 col-md-4 col-lg-3 col-xl-2" key={file.name}>
           <div>
             <img className="thumbnail" src={file.url} alt={file.name} />
           </div>

@@ -1,20 +1,9 @@
 import React from 'react';
-// import PropTypes from 'prop-types';
+import { Container } from 'reactstrap';
 
-const Home = (/* props */) => <div className="home">dummy</div>;
-
-// Pages.propTypes = {
-//   families: PropTypes.arrayOf(
-//     PropTypes.shape({
-//       family: PropTypes.string.isRequired,
-//       data: PropTypes.array.isRequired,
-//       completed: PropTypes.bool.isRequired,
-//     }),
-//   ),
-// };
-
-// Pages.defaultProps = {
-//   families: [],
-// };
+const Home = () => (
+  <Container fluid className="page-content home-page">
+    <h1>Home</h1>
+  </Container>);
 
 export default Home;

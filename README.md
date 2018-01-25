@@ -1,5 +1,7 @@
 
 ### TODO
+* Add demo images
+* Home page or visa generatorsidan
 * Tests
 * Deploy
   
