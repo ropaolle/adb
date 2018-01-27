@@ -10,7 +10,7 @@ import {
 } from 'reactstrap';
 import chunk from 'lodash.chunk';
 import { dateToString } from '../../utils/xlsx';
-import missing from '../missing.svg';
+import missing from './missing.svg';
 
 class Page extends Component {
   constructor(props) {
@@ -83,7 +83,7 @@ class Page extends Component {
     return (
       <div className="page">
         {pageHeader(page[0], completed)}
-        <div>{cards(page)}</div>
+        {cards(page)}
       </div>
     );
   }

@@ -17,6 +17,45 @@
 }
 
 /**
+ * Main page
+**/
+
+.home-page ol {
+  font-size: 28px;
+}
+
+.home-page ol div {
+  font-size: 18px;
+}
+
+.home-page ol i {
+  margin: 0 6px;
+  color: #777;
+}
+
+.page-sub-main {
+  font-size: 24px;
+  font-weight: bold;
+  color: #777;
+  margin-top: 38px;
+
+    margin-bottom: 12px;
+}
+
+.page-sub-main i {
+  font-size: 30px;
+  color: #222;
+  margin-right: 15px;
+  margin-left: 5px;
+}
+
+.page-sub-main .klass i {
+  background-color: #333;
+  color: #eee;
+  padding: 5px 10px;
+}
+
+/**
  * Help page
 **/
 
@@ -89,6 +128,14 @@ form.settings {
  * Dynamic pages
 **/
 
+.pages {
+  width: 100%;
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-right: auto;
+  margin-left: auto;
+}
+
 .page {
   border: 1px solid #ccc;
   padding: 30px;
@@ -111,7 +158,7 @@ form.settings {
 }
 
 .page-sub i {
-  font-size: 1.4rem;
+  font-size: 20px;
   color: #222;
   margin-right: 15px;
   margin-left: 5px;
@@ -149,8 +196,8 @@ form.settings {
 
 .card-title {
   margin-bottom: 0;
-  font-size: 18px;
-  min-height: 2.6rem;
+  font-size: 16px;
+  min-height: 2.5rem;
   line-height: 1.3rem;
 }
 
@@ -169,7 +216,7 @@ form.settings {
 }
 
 @media print {
-  .page-content {
+  .generator-page {
     display: none;
   }
 

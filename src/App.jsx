@@ -63,7 +63,18 @@ class App extends Component {
         <div className="app">
           <AppNavbar />
 
-          <Route exact path="/" component={Home} />
+          <Route
+            exact
+            path="/"
+            render={routeProps => (
+              <Home
+                {...routeProps}
+                images={images}
+                families={families}
+              />
+            )}
+          />
+
           <Route
             path="/generator"
             render={routeProps => (

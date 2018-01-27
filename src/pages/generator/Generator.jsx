@@ -80,6 +80,7 @@ class PageGenerator extends Component {
         </Container>
 
         {families && <Pages families={filteredFamilies} completed={completed} images={images} />}
+
       </div>
     );
   }

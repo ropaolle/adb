@@ -16,11 +16,6 @@ export const database = firebase.firestore();
 // export const firebaseAuth = firebase.auth;
 export const storage = firebase.storage().ref();
 
-// Database paths
-// export const DB_USERS = 'users';
-// export const DB_BUDGET_COLLECTION = 'budget';
-// export const DB_EXSPENSES_COLLECTION = 'expenses';
-
 export const loadImages = () => database.collection('images')
   .get()
   .then((querySnapshot) => {

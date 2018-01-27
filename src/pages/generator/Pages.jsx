@@ -4,12 +4,11 @@ import chunk from 'lodash.chunk';
 import Page from './Page';
 
 const Pages = function dude(props) {
-  // console.log('FULL', props.families);
   const pages = props.families.map(family =>
     chunk(family.data, 9).map(page => (
       <Page
         page={page}
-        completed={family.completed && props.completed}
+        completed={/* family.completed && */ props.completed}
         key={page[0].id}
         images={props.images}
       />
