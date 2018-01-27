@@ -2,12 +2,12 @@ import * as firebase from 'firebase';
 import 'firebase/firestore';
 
 const config = {
-  apiKey: 'AIzaSyDsrPH_fYtKmLvDaidU1HKsfA9uKkyVHq0',
-  authDomain: 'budget-ec3f9.firebaseapp.com',
-  databaseURL: 'https://budget-ec3f9.firebaseio.com',
-  projectId: 'budget-ec3f9',
-  storageBucket: 'budget-ec3f9.appspot.com',
-  messagingSenderId: '47147422899',
+  apiKey: 'AIzaSyAtNXWmXp1afYAGQ51aXdyCR4WRc42ViN4',
+  authDomain: 'artdatabanken.firebaseapp.com',
+  databaseURL: 'https://artdatabanken.firebaseio.com',
+  projectId: 'artdatabanken',
+  storageBucket: 'artdatabanken.appspot.com',
+  messagingSenderId: '495647184718',
 };
 
 firebase.initializeApp(config);
@@ -63,6 +63,7 @@ export const storeFamilies = (families) => {
 export const loadFamilies = () => database.collection('families').doc('default')
   .get()
   .then((snapshot) => {
+    if (!snapshot.exists) return [];
     const { families } = snapshot.data();
     console.log('Loaded families', families);
 

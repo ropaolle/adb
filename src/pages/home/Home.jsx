@@ -47,8 +47,8 @@ const Pages = function dude(props) {
     return (imageExists) ? imageExists.url : missing;
   };
 
-  const getCard = item => (<Col xs="6" sm="4" lg="3" xl="2" className="mb-4" >
-    <Card key={item.id}>
+  const getCard = item => (<Col xs="6" sm="4" lg="3" xl="2" className="mb-4" key={item.id}>
+    <Card>
       <CardImg top width="100%" src={imgSrc(item.image)} alt={item.speices} />
       {!item.image && <CardImgOverlay>Saknas</CardImgOverlay>}
       <CardBody>
@@ -65,31 +65,27 @@ const Pages = function dude(props) {
       </CardFooter>
     </Card></Col>);
 
-  const pages = families.map(family => (<div>
+  const pages = families.map(family => (<div key={family.id}>
     <Row id={`toc-${family.id}`}><Col>{pageHeader(family.data[0])}</Col></Row>
     <Row key={family.data[0].id}>
       {family.data.map(card => getCard(card))}
     </Row>
   </div>));
 
-  const toc = families.map((family) => {
-    console.log(family);
-    return (
-      <li key={family.id}>
-        <a href={`#toc-${family.id}`}>{family.family}</a>
-        <div>
-          {family.data.map((val, i) => <span>{val.speices}{family.data.length - 1 !== i ? <i>|</i> : ''}</span>)}
-        </div>
-      </li>
-    );
-  });
-
+  const toc = families.map(family => (
+    <li key={family.id}>
+      <a href={`#toc-${family.id}`}>{family.family}</a>
+      <div>
+        {family.data.map((val, i) => <span key={i}>{val.speices}{family.data.length - 1 !== i ? <i>|</i> : ''}</span>)}
+      </div>
+    </li>
+  ));
 
   return (
     <Container fluid className="page-content home-page">
       <h1>Innehåll</h1>
       <ol>{toc}</ol>
-      {pages}
+      {families && pages}
     </Container>
   );
 };
