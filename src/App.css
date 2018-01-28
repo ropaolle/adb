@@ -20,6 +20,27 @@
  * Main page
 **/
 
+.banner img {
+  width: 100%;
+}
+
+.banner h1 {
+  position: absolute;
+  margin-top: -6rem;
+  margin-left: 2rem;
+  font-size: 4rem;
+  color: #eeeeee;
+}
+
+.footer {
+  background-color: #eee;
+  width: 100%;
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-right: auto;
+  margin-left: auto;
+}
+
 .home-page ol {
   font-size: 28px;
 }

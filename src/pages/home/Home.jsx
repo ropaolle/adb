@@ -11,7 +11,6 @@ import {
   Row,
   Col,
 } from 'reactstrap';
-import './Home.css';
 import { dateToString } from '../../utils/xlsx';
 import missing from '../generator/missing.svg';
 import banner from './banner.jpg';
@@ -93,7 +92,7 @@ const Pages = function dude(props) {
 
         <h1>Innehåll</h1>
         <ol>{toc}</ol>
-        {/* families && pages */}
+        { families && pages }
       </Container>
       <div className="footer">
         <Row><Col>Footer</Col><Col>Info</Col></Row>
