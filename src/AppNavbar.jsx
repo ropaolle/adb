@@ -30,7 +30,7 @@ export default class AppNavbar extends React.Component {
     return (
       <div>
         <Navbar color="dark" dark expand="md">
-          <NavbarBrand to="/" tag={RRNavLink}>Artdatabanken</NavbarBrand>
+          <NavbarBrand to="/" tag={RRNavLink}><img src="./favicon-32x32.png" alt="" />Artdatabanken</NavbarBrand>
           <NavbarToggler onClick={this.toggle} />
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className="ml-auto" navbar>

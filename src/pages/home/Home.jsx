@@ -11,8 +11,10 @@ import {
   Row,
   Col,
 } from 'reactstrap';
+import './Home.css';
 import { dateToString } from '../../utils/xlsx';
 import missing from '../generator/missing.svg';
+import banner from './banner.jpg';
 
 const Pages = function dude(props) {
   const { families, images } = props;
@@ -82,11 +84,21 @@ const Pages = function dude(props) {
   ));
 
   return (
-    <Container fluid className="page-content home-page">
-      <h1>Innehåll</h1>
-      <ol>{toc}</ol>
-      {families && pages}
-    </Container>
+    <div>
+      <div className="banner" >
+        <img src={banner} alt="bird-banner" />
+        <h1>Artdatabanken</h1>
+      </div>
+      <Container fluid className="page-content home-page">
+
+        <h1>Innehåll</h1>
+        <ol>{toc}</ol>
+        {/* families && pages */}
+      </Container>
+      <div className="footer">
+        <Row><Col>Footer</Col><Col>Info</Col></Row>
+      </div>
+    </div>
   );
 };
 
