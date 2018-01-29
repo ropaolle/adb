@@ -2,6 +2,18 @@
  * App
 **/
 
+/* Sticky footer https://css-tricks.com/couple-takes-sticky-footer/ */
+
+html, body, #root, .app {
+  height: 100%;
+  margin: 0;
+}
+
+.wrapper {
+  min-height: 100%;
+  margin-bottom: -90px;
+}
+
 .app .nav {
   background: #eee;
   padding-top: 5px;
@@ -13,12 +25,42 @@
 }
 
 .page-content {
-  margin: 20px 0;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.footer, .push {
+  height: 90px;
+}
+
+.footer  {
+  font-size: 14px;
+  background-color: #eee;
+  padding-right: 15px;
+  padding-left: 15px;
+  /* width: 100%;
+  margin-right: auto;
+  margin-left: auto; */
+}
+
+.footer .row {
+  padding-top: 25px;
+}
+
+.footer .right {
+  text-align: right;
+  font-weight: bold;
 }
 
 /**
- * Main page
+ * Home page
 **/
+
+.banner {
+  margin-left: -15px;
+  margin-right: -15px;
+  margin-top: -20px;
+}
 
 .banner img {
   width: 100%;
@@ -32,48 +74,17 @@
   color: #eeeeee;
 }
 
-.footer {
-  background-color: #eee;
-  width: 100%;
-  padding-right: 15px;
-  padding-left: 15px;
-  margin-right: auto;
-  margin-left: auto;
+.home-page .row {
+  font-size: 1.5rem;
+  margin: 35px 0;
 }
 
-.home-page ol {
-  font-size: 28px;
+.home-page .row img {
+  max-width: 90%;
 }
 
-.home-page ol div {
-  font-size: 18px;
-}
-
-.home-page ol i {
-  margin: 0 6px;
-  color: #777;
-}
-
-.page-sub-main {
-  font-size: 24px;
-  font-weight: bold;
-  color: #777;
-  margin-top: 38px;
-
-    margin-bottom: 12px;
-}
-
-.page-sub-main i {
-  font-size: 30px;
-  color: #222;
-  margin-right: 15px;
-  margin-left: 5px;
-}
-
-.page-sub-main .klass i {
-  background-color: #333;
-  color: #eee;
-  padding: 5px 10px;
+.home-page .row {
+  text-align: center;
 }
 
 /**

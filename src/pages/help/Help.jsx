@@ -1,11 +1,10 @@
 import React from 'react';
-import { Container } from 'reactstrap';
 import fotor01b from './fotor01b.jpg';
 import fotor02b from './fotor02b.jpg';
 import fotor03b from './fotor03b.png';
 
 const Help = () => (
-  <Container fluid className="page-content help-page">
+  <div className="help-page">
     <h1>Beskära bilder</h1>
     <ol>
       <li>
@@ -29,6 +28,6 @@ const Help = () => (
       <li>Ta bort dialogen Saved Successfully genom att trycka OK.</li>
       <li>Klart...</li>
     </ol>
-  </Container>);
+  </div>);
 
 export default Help;

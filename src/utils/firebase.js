@@ -7,13 +7,12 @@ const config = {
   databaseURL: 'https://artdatabanken.firebaseio.com',
   projectId: 'artdatabanken',
   storageBucket: 'artdatabanken.appspot.com',
-  messagingSenderId: '495647184718',
+  // messagingSenderId: '495647184718',
 };
 
 firebase.initializeApp(config);
 
 export const database = firebase.firestore();
-// export const firebaseAuth = firebase.auth;
 export const storage = firebase.storage().ref();
 
 export const loadImages = () => database.collection('images')

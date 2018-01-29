@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Button, Progress, Container, Row, Col, Alert } from 'reactstrap';
+import { Button, Progress, Row, Col, Alert } from 'reactstrap';
 
 class Images extends Component {
   constructor(props) {
@@ -73,7 +73,7 @@ class Images extends Component {
       ));
 
     return (
-      <Container fluid className="page-content">
+      <div className="images-page">
         <div className="progress-wrapper">{progress()}</div>
 
         {alert && <Alert color="info">This is a info alert — check it out!</Alert>}
@@ -101,7 +101,7 @@ class Images extends Component {
 
         {showImages && <Row><Col><h2>Alla uppladdade bilder</h2></Col></Row>}
         <Row className="image-grid">{showImages && imageList(images)}</Row>
-      </Container>
+      </div>
     );
   }
 }

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Form, FormGroup, Label, Input, Container, Col, Row, Alert } from 'reactstrap';
+import { Form, FormGroup, Label, Input, Col, Row, Alert } from 'reactstrap';
 import Pages from './Pages';
 
 class PageGenerator extends Component {
@@ -44,7 +44,7 @@ class PageGenerator extends Component {
 
     return (
       <div>
-        <Container fluid className="page-content generator-page">
+        <div className="generator-page">
           <Alert color="success">
             {alert && <span><b>{families.length}</b> familjer inlästa från <b>{alert}</b>.</span>}
           </Alert>
@@ -77,7 +77,7 @@ class PageGenerator extends Component {
             </FormGroup>
           </Form>
 
-        </Container>
+        </div>
 
         {families && <Pages families={filteredFamilies} completed={completed} images={images} />}
 

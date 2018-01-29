@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { Row, Col, Container } from 'reactstrap';
 import './App.css';
 import AppNavbar from './AppNavbar';
 import Home from './pages/home/Home';
@@ -61,39 +62,52 @@ class App extends Component {
     return (
       <Router>
         <div className="app">
-          <AppNavbar />
+          <div className="wrapper">
+            <AppNavbar />
 
-          <Route
-            exact
-            path="/"
-            render={routeProps => (
-              <Home
-                {...routeProps}
-                images={images}
-                families={families}
+            <Container fluid className="page-content">
+              <Route
+                exact
+                path="/"
+                render={routeProps => (
+                  <Home
+                    {...routeProps}
+                    images={images}
+                    families={families}
+                  />
+                )}
               />
-            )}
-          />
 
-          <Route
-            path="/generator"
-            render={routeProps => (
-              <Generator
-                {...routeProps}
-                images={images}
-                families={families}
-                loadXlsx={this.loadXlsx}
-                alert={alert}
+              <Route
+                path="/generator"
+                render={routeProps => (
+                  <Generator
+                    {...routeProps}
+                    images={images}
+                    families={families}
+                    loadXlsx={this.loadXlsx}
+                    alert={alert}
+                  />
+                )}
               />
-            )}
-          />
-          <Route
-            path="/images"
-            render={routeProps => (
-              <Images {...routeProps} images={images} uploadImages={this.uploadImages} />
-            )}
-          />
-          <Route path="/help" component={Help} />
+              <Route
+                path="/images"
+                render={routeProps => (
+                  <Images {...routeProps} images={images} uploadImages={this.uploadImages} />
+                )}
+              />
+              <Route path="/help" component={Help} />
+            </Container>
+
+            <div className="push" />
+          </div>
+
+          <div className="footer">
+            <Row>
+              <Col className="left">By <b>RopaOlle</b><br /><a href="https://github.com/ropaolle/artdatabanken-firebase">GitHub repo</a></Col>
+              <Col className="right">Artdatabanken 2018 <img src="./favicon.ico" alt="" /></Col>
+            </Row>
+          </div>
         </div>
       </Router>
     );

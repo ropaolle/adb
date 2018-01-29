@@ -1,6 +1,4 @@
-
-
-Ett [JS-XLSX](https://github.com/SheetJS/js-xlsx)-projekt byggt med react/firebase app som skapar artdatabasfiler från Pappas Excelbaserade artdatabank. En demo av appen finns på sidan https://artdatabanken.firebaseapp.com.
+Ett [JS-XLSX](https://github.com/SheetJS/js-xlsx)-projekt byggt med React/Firebase som skapar artdatabasfiler från en Excelbaserad artdatabank. En demo av appen finns på sidan https://artdatabanken.firebaseapp.com.
 
 ![Example](/data/example-small.jpg)
 
