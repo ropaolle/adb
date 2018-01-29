@@ -13,14 +13,9 @@ class PageGenerator extends Component {
     };
   }
 
-  // updateState = (filename, length) => {
-  //   const alert = <span><b>{filename}</b> laddad. <b>{length}</b> familjer hittade.</span>;
-  //   this.setState({ alert });
-  // };
-
   handleFileOpen = (e) => {
     const file = e.target.files[0];
-    this.props.loadXlsx(file/* , this.updateState */);
+    this.props.loadXlsx(file);
   }
 
   handleSelect = (e) => {

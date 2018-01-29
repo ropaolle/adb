@@ -80,7 +80,8 @@ html, body, #root, .app {
 }
 
 .home-page .row img {
-  max-width: 90%;
+  max-width: 70%;
+  border: 1px solid #bbb;
 }
 
 .home-page .row {
@@ -248,8 +249,14 @@ form.settings {
 }
 
 @media print {
-  .generator-page {
+  .generator-page, .footer {
     display: none;
+  }
+
+  html, body, #root, .app, .wrapper, .page-content {
+    padding: 0;
+    margin: 0;
+    height: 100%;
   }
 
   .page {

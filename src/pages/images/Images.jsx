@@ -25,7 +25,7 @@ class Images extends Component {
   };
 
   handleFileUpload = (e) => {
-    const files = e.target.files; // console.log(files);
+    const files = e.target.files;
     const fileArr = [...files];
     const status = fileArr.map((file, i) => ({ name: file.name, uploaded: false, key: i }));
     this.setState({ status });

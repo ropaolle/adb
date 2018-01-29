@@ -8,3 +8,6 @@ Ett [JS-XLSX](https://github.com/SheetJS/js-xlsx)-projekt byggt med React/Fireba
 git remote add origin git@github.com:ropaolle/adb.git
 git push origin master
 ```
+
+### Info
+[Create thumbnails](https://github.com/firebase/functions-samples/blob/master/generate-thumbnail/functions/index.js)
