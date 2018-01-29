@@ -48,7 +48,6 @@ html, body, #root, .app {
 }
 
 .footer .right {
-  text-align: right;
   font-weight: bold;
 }
 
@@ -80,7 +79,7 @@ html, body, #root, .app {
 }
 
 .home-page .row img {
-  max-width: 70%;
+  max-width: 100%;
   border: 1px solid #bbb;
 }
 
@@ -188,6 +187,7 @@ form.settings {
   font-weight: bold;
   color: #777;
   margin: 18px 0px;
+  max-width: 100%;
 }
 
 .page-sub i {

@@ -10,15 +10,15 @@ const Pages = function dude() {
     <div className="home-page">
       <div className="banner">
         <img src={banner} alt="bird-banner" />
-        <h1>Artdatabanken</h1>
+        <h1 className="d-none">Artdatabanken</h1>
       </div>
       <Row>
         <Col>Ett <a href="https://github.com/SheetJS/js-xlsx">JS-XLSX</a>-projekt byggt med React/Firebase som skapar artdatabasfiler från en Excelbaserad artdatabank.</Col>
       </Row>
       <Row>
-        <Col><img src={ex3} alt="art-card" /></Col>
-        <Col><img src={ex1} alt="art-card" /></Col>
-        <Col><img src={ex2} alt="art-card" /></Col>
+        <Col xs="12" md="4" className="mb-4"><img src={ex3} alt="art-card" /></Col>
+        <Col xs="12" md="4" className="mb-4"><img src={ex1} alt="art-card" /></Col>
+        <Col xs="12" md="4" className="mb-4"><img src={ex2} alt="art-card" /></Col>
       </Row>
     </div>
   );

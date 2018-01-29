@@ -104,8 +104,10 @@ class App extends Component {
 
           <div className="footer">
             <Row>
-              <Col className="left">By <b>RopaOlle</b><br /><a href="https://github.com/ropaolle/artdatabanken-firebase">GitHub repo</a></Col>
-              <Col className="right">Artdatabanken 2018 <img src="./favicon.ico" alt="" /></Col>
+              <Col>
+                <span className="float-left left">By <b>RopaOlle</b><br /><a href="https://github.com/ropaolle/artdatabanken-firebase">GitHub repo</a></span>
+                <span className="float-right right">Artdatabanken 2018 <img src="./favicon.ico" alt="" /></span>
+              </Col>
             </Row>
           </div>
         </div>
