@@ -42,7 +42,6 @@ export default class AppNavbar extends React.Component {
 
   componentDidMount = () => {
     this.removeAuthListener = firebaseAuth().onAuthStateChanged((user) => {
-      console.log(formatUserObj(user));
       this.setState({ user: formatUserObj(user) });
     });
   };
