@@ -1,16 +1,14 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Button, Progress, Row, Col, Alert } from 'reactstrap';
+import { Progress, Row, Col, Jumbotron, Table } from 'reactstrap';
 
 class Images extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      status: [],
+      uploaded: [],
       images: props.images,
-      showImages: false,
-      alert: '',
     };
   }
 
@@ -19,31 +17,27 @@ class Images extends Component {
   }
 
   updateState = (i, url) => {
-    const { status } = this.state;
-    status[i].uploaded = true;
-    status[i].url = url;
+    const { uploaded } = this.state;
+    uploaded[i].uploaded = true;
+    uploaded[i].url = url;
   };
 
   handleFileUpload = (e) => {
     const files = e.target.files;
     const fileArr = [...files];
-    const status = fileArr.map((file, i) => ({ name: file.name, uploaded: false, key: i }));
-    this.setState({ status });
+    const uploaded = fileArr.map((file, i) => ({ name: file.name, uploaded: false, key: i }));
+    this.setState({ uploaded });
 
     this.props.uploadImages(fileArr, this.updateState);
   };
 
-  handleShowImages = () => {
-    this.setState({ showImages: !this.state.showImages });
-  };
-
   render() {
-    const { status, alert, images, showImages } = this.state;
+    const { uploaded, images } = this.state;
 
     const progress = () => {
-      const currProg = (status.filter(val => val.uploaded === true).length / status.length) * 100;
+      const currProg = (uploaded.filter(val => val.uploaded === true).length / uploaded.length) * 100;
       return (
-        !!status.length && (
+        !!uploaded.length && (
           <Progress striped color="success" value={currProg}>
             {currProg}%
           </Progress>
@@ -62,9 +56,9 @@ class Images extends Component {
       return 0;
     };
 
-    const imageList = imgs =>
-      imgs.filter(file => file.url !== undefined).sort(sort).map(file => (
-        <Col className="col-6 col-sm-4 col-md-4 col-lg-3 col-xl-2 col" key={file.name}>
+    const uploadedImagesGrid =
+      uploaded.filter(file => file.url !== undefined).sort(sort).map(file => (
+        <Col className="col-6 col-sm-4 col-md-3 col-lg-3 col-xl-2 col" key={file.name}>
           <div>
             <img className="thumbnail" src={file.url} alt={file.name} />
           </div>
@@ -72,35 +66,50 @@ class Images extends Component {
         </Col>
       ));
 
+    /* eslint react/no-array-index-key: 0 */
+    const imageTable = imgs =>
+      imgs.filter(file => file.url !== undefined).sort(sort).map((file, index) => (
+        <tr key={index}>
+          <td>{index}</td>
+          <td><img className="thumbnail" src={file.url} alt={file.name} /></td>
+          <td><div className="filename">{file.name}</div></td>
+        </tr>
+      ));
+
     return (
       <div className="images-page">
-        <div className="progress-wrapper">{progress()}</div>
-
-        {alert && <Alert color="info">This is a info alert — check it out!</Alert>}
+        {uploaded.length > 0 && <Jumbotron>
+          <h2>Nya bilder</h2>
+          <div className="progress-wrapper">{progress()}</div>
+          <Row className="image-grid">{uploadedImagesGrid}</Row>
+        </Jumbotron>}
 
         <Row>
           <Col className="col-6">
             <h1>Bilder</h1>
           </Col>
+
           <Col className="col-6">
             <label className="btn btn-success btn-file-upload" htmlFor="fileUpload">
               Ladda upp bilder
               <input type="file" onChange={this.handleFileUpload} id="fileUpload" multiple />
             </label>
-            <Button
-              onClick={this.handleShowImages}
-              className="show-images"
-              color="primary"
-            >
-              {showImages ? 'Dölj bilder' : 'Visa alla bilder'}
-            </Button>
           </Col>
         </Row>
 
-        <Row className="image-grid">{imageList(status)}</Row>
+        <Table striped hover responsive className="image-table">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th >Bild</th>
+              <th className="w-100">Filnamn</th>
+            </tr>
+          </thead>
+          <tbody>
+            {imageTable(images)}
+          </tbody>
+        </Table>
 
-        {showImages && <Row><Col><h2>Alla uppladdade bilder</h2></Col></Row>}
-        <Row className="image-grid">{showImages && imageList(images)}</Row>
       </div>
     );
   }
