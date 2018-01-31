@@ -51,6 +51,17 @@ html, body, #root, .app {
   font-weight: bold;
 }
 
+.user-icon {
+  width: 32px;
+  height: 32px;
+  margin-top: 3px;
+  margin-left: 12px;
+}
+
+.user-menu {
+  padding: 0;
+}
+
 /**
  * Home page
 **/
@@ -185,8 +196,6 @@ form.settings {
   text-align: center;
   border-bottom: 2px solid #999;
 }
-
-
 
 .page-sub {
   font-size: 16px;

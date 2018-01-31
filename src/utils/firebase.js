@@ -13,6 +13,7 @@ const config = {
 firebase.initializeApp(config);
 
 export const database = firebase.firestore();
+export const firebaseAuth = firebase.auth;
 export const storage = firebase.storage().ref();
 
 export const loadImages = () => database.collection('images')

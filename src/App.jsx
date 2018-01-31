@@ -27,6 +27,7 @@ class App extends Component {
     });
   };
 
+
   loadXlsx = (file) => {
     parsXlsx(file).then((families) => {
       this.setState({ families, alert: file.name });
